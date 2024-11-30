@@ -24,7 +24,7 @@ class SimpleXMLParser{
      * @param {string} xmlString 
      */
     #makeObject(xmlString){
-        prolog = readProlog(xmlString);
+        let prolog = this.#readProlog(xmlString);
         if (prolog){
             this.parsedObject.prolog=prolog;
         }
@@ -51,9 +51,21 @@ class SimpleXMLParser{
         let prologEndCursor = prologLine.indexOf(" ");
 
         let docType = prologLine.slice(prologCursor, prologEndCursor);
-        prologCursor = prologLine.slice(prologEndCursor).search(/[A-Za-z]/);
-        
 
+        // find all equals
+        let equal_signs = prologLine.match("=").length;
+
+        for (let i=0; i<equal_signs;i++){
+            prologCursor = prologLine.slice(prologEndCursor).search(/[A-Za-z]/)+prologCursor;
+            prologEndCursor = prologLine.slice(prologEndCursor).search("=")+prologEndCursor;
+            
+            console.log(prologCursor, prologEndCursor)
+        }
+
+        // prologCursor = prologLine.slice(prologEndCursor).search(/[A-Za-z]/)+prologEndCursor;
+        // prologEndCursor = prologLine.slice(prologCursor).search("=")+prologCursor;
+
+        // console.log(docType, prologCursor, prologEndCursor);
 
     }
 
